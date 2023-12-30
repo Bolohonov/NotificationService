@@ -9,4 +9,4 @@ docker-compose up
 Будут развернуты 3 контейнера Docker.   
 Доступ к сервису: localhost:9090  
 Доступ к Eureka: localhost:8761  
-Postman-коллекция для тестирования контроллерав корневой папке: NotificationService.postman_collection.json
+Postman-коллекция для тестирования контроллера в корневой папке: NotificationService.postman_collection.json
