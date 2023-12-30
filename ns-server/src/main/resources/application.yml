@@ -1,0 +1,9 @@
+server:
+  port: 9090
+spring:
+  application:
+    name: server
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
