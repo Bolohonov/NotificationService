@@ -6,6 +6,7 @@ mvn clean package
 После завершения работы maven при запущенном Docker ввести команду:   
 docker-compose up
 
-Будут развернуты 3 контейнера Docker. 
-Доступ к сервису: localhost:9090
-Доступ к Eureka: localhost:8761
+Будут развернуты 3 контейнера Docker.   
+Доступ к сервису: localhost:9090  
+Доступ к Eureka: localhost:8761  
+Postman-коллекция для тестирования контроллерав корневой папке: NotificationService.postman_collection.json
