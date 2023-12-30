@@ -1,5 +1,5 @@
 server:
-  port: 8085
+  port: 9090
 spring:
   application:
     name: api-gateway
@@ -10,7 +10,7 @@ spring:
           enabled: true
       routes:
         - id: ns-server
-          uri: http://localhost:9090
+          uri: ${NS_SERVER_URI}
           predicates:
             - Path=/notifications/**
 eureka:

@@ -12,8 +12,9 @@ services:
     build: api-gateway
     container_name: api_gateway_container
     ports:
-      - "8085:8085"
+      - "9090:9090"
     environment:
+      - NS_SERVER_URI=http://ns-server:8085
       - eureka.client.serviceUrl.defaultZone=http://eureka-server:8761/eureka/
     depends_on:
       - eureka-server
@@ -26,7 +27,7 @@ services:
     build: ns-server
     container_name: server_container
     ports:
-      - "9090:9090"
+      - "8085:8085"
     environment:
       - eureka.client.serviceUrl.defaultZone=http://eureka-server:8761/eureka/
     depends_on:
