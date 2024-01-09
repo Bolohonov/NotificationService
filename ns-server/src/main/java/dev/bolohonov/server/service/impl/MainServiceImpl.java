@@ -11,26 +11,22 @@ import org.springframework.stereotype.Service;
 public class MainServiceImpl implements MainService {
     @Override
     public MessageDto sendSms(MessageDto messageDto) {
-        String status = MessageType.SMS + " was sent";
-        messageDto.setMsgType(MessageType.SMS);
-        messageDto.setStatus(status);
-        log.info(status);
-        return messageDto;
+        return sendMsg(messageDto, MessageType.SMS);
     }
 
     @Override
     public MessageDto sendPush(MessageDto messageDto) {
-        String status = MessageType.PUSH + " was sent";
-        messageDto.setMsgType(MessageType.PUSH);
-        messageDto.setStatus(status);
-        log.info(status);
-        return messageDto;
+        return sendMsg(messageDto, MessageType.PUSH);
     }
 
     @Override
     public MessageDto sendEmail(MessageDto messageDto) {
-        String status = MessageType.EMAIL + " was sent";
-        messageDto.setMsgType(MessageType.EMAIL);
+        return sendMsg(messageDto, MessageType.EMAIL);
+    }
+
+    private MessageDto sendMsg(MessageDto messageDto, MessageType messageType) {
+        String status = messageType + " was sent";
+        messageDto.setMsgType(messageType);
         messageDto.setStatus(status);
         log.info(status);
         return messageDto;
