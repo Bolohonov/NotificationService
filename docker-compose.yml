@@ -21,7 +21,6 @@ services:
     depends_on:
       - eureka-server
       - ns-server
-    restart: always
     links:
       - eureka-server
 
