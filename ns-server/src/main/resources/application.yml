@@ -2,7 +2,7 @@ server:
   port: 8085
 spring:
   application:
-    name: server
+    name: ns-server
 
 jwt:
   secret: ${JWT_SECRET}

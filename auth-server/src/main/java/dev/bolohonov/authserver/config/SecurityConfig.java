@@ -39,7 +39,7 @@ public class SecurityConfig {
     return http.getSharedObject(AuthenticationManagerBuilder.class)
             .inMemoryAuthentication()
             .withUser("admin").password(encoder.encode("admin")).roles("ADMIN", "USER").and()
-            .withUser("mosy").password(encoder.encode("1234")).roles("USER")
+            .withUser("user").password(encoder.encode("user")).roles("USER")
             .and().and().parentAuthenticationManager(null).build();
   }
 

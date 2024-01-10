@@ -10,7 +10,7 @@ import org.springframework.web.context.request.WebRequest;
 
 // This class handles error and return appropriate response to client
 @ControllerAdvice
-@Order()
+@Order
 public class GeneralExceptionHelper {
 
     // handling other Exception
