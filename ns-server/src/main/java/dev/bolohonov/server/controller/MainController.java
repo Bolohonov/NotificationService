@@ -19,33 +19,21 @@ public class MainController {
         this.mainService = mainService;
     }
 
-    @PostMapping("/sms")
+    @PostMapping("sms")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ResponseEntity<MessageDto> postSms(@Validated @RequestBody MessageDto messageDto) {
         return ResponseEntity.ok(mainService.sendSms(messageDto));
     }
 
-    @PostMapping("/push")
+    @PostMapping("push")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ResponseEntity<MessageDto> postPush(@Validated @RequestBody MessageDto messageDto) {
         return ResponseEntity.ok(mainService.sendPush(messageDto));
     }
 
-    @PostMapping("/email")
+    @PostMapping("email")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ResponseEntity<MessageDto> postEmail(@Validated @RequestBody MessageDto messageDto) {
         return ResponseEntity.ok(mainService.sendEmail(messageDto));
-    }
-
-    @GetMapping("/test")
-    @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public String greeting() {
-        return "Hello all! It's a public endpoint. Every user can reach me.";
-    }
-
-    @PostMapping("/test2")
-    @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public String test(@RequestParam String msg) {
-        return msg;
     }
 }
