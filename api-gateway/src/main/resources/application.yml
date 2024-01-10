@@ -8,6 +8,7 @@ spring:
       discovery:
         locator:
           enabled: true
+
       routes:
         - id: ns-server
           uri: ${NS_SERVER_URI}
@@ -15,11 +16,6 @@ spring:
             - Path=/notifications/**
           filters:
             - StripPrefix=1
-            - name: RequestRateLimiter
-              args:
-                redis-rate-limiter.replenishRate: 1
-                redis-rate-limiter.burstCapacity: 2
-                redis-rate-limiter.requestedTokens: 2
         - id: auth-server
           uri: ${AUTH_SERVER_URI}
           predicates:

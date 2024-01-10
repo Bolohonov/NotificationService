@@ -40,10 +40,10 @@ public class MainController {
     @GetMapping("/test")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public String greeting() {
-        return "Authorized";
+        return "Hello all! It's a public endpoint. Every user can reach me.";
     }
 
-    @PostMapping("/test")
+    @PostMapping("/test2")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public String test(@RequestParam String msg) {
         return msg;

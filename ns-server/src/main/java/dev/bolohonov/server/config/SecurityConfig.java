@@ -48,7 +48,7 @@ public class SecurityConfig {
         // Set permissions on endpoints
         http.authorizeRequests()
 
-                .antMatchers("/products/public" )
+                .antMatchers("/notifications/test" )
                 .permitAll()
                 .anyRequest()
                 .authenticated();
