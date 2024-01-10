@@ -11,13 +11,13 @@ spring:
 
       routes:
         - id: ns-server
-          uri: ${NS_SERVER_URI}
+          uri: http://localhost:8085
           predicates:
             - Path=/notifications/**
           filters:
             - StripPrefix=1
         - id: auth-server
-          uri: ${AUTH_SERVER_URI}
+          uri: http://localhost:8090
           predicates:
             - Path=/auth/**
           filters:
