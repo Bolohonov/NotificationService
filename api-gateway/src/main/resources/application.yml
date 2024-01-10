@@ -11,13 +11,13 @@ spring:
 
       routes:
         - id: ns-server
-          uri: http://localhost:8085
+          uri: ${NS_SERVER_URI}
           predicates:
             - Path=/api/notifications/**
           filters:
             - StripPrefix=1
         - id: auth-server
-          uri: http://localhost:8090
+          uri: ${AUTH_SERVER_URI}
           predicates:
             - Path=/auth/**
           filters:
@@ -27,7 +27,7 @@ spring:
       host: redis
       port: 6379
 jwt:
-  secret: ecf1222c-88fd-47f3-988f-bdd78bade1ad
+  secret: ${JWT_SECRET}
 
 eureka:
   client:
