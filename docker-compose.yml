@@ -14,13 +14,14 @@ services:
     ports:
       - "9090:9090"
     environment:
-        - JWT_SECRET=ecf1222c-88fd-47f3-988f-bdd78bade1ad
         - eureka.client.serviceUrl.defaultZone=http://eureka-server:8761/eureka/
+        - JWT_SECRET=ecf1222c-88fd-47f3-988f-bdd78bade1ad
         - NS_SERVER_URI=http://ns-server:8085
         - AUTH_SERVER_URI=http://auth-server:8090
     depends_on:
       - eureka-server
       - ns-server
+      - auth-server
     links:
       - eureka-server
 
