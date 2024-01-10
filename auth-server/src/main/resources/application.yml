@@ -3,7 +3,10 @@ server:
 
 spring:
   application:
-    name: authorization-server
+    name: auth-server
+
+jwt:
+  secret: ${JWT_SECRET}
 
 eureka:
   client:
