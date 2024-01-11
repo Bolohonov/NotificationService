@@ -60,6 +60,16 @@
 				}
 			],
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -72,13 +82,11 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:9090/notifications/sms",
+					"raw": "{{baseUrl}}/sms",
 					"host": [
-						"localhost"
+						"{{baseUrl}}"
 					],
-					"port": "9090",
 					"path": [
-						"notifications",
 						"sms"
 					]
 				}
@@ -137,6 +145,16 @@
 				}
 			],
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -149,13 +167,11 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:9090/notifications/push",
+					"raw": "{{baseUrl}}/push",
 					"host": [
-						"localhost"
+						"{{baseUrl}}"
 					],
-					"port": "9090",
 					"path": [
-						"notifications",
 						"push"
 					]
 				}
@@ -217,6 +233,16 @@
 				}
 			],
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -229,18 +255,70 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:9090/notifications/email",
+					"raw": "{{baseUrl}}/email",
 					"host": [
-						"localhost"
+						"{{baseUrl}}"
 					],
-					"port": "9090",
 					"path": [
-						"notifications",
 						"email"
 					]
 				}
 			},
 			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"var request = {",
+					"        url: 'localhost:9090/auth/login',",
+					"        method: 'POST',",
+					"        header: 'Content-Type:application/json',",
+					"        body: {",
+					"              mode: 'raw',",
+					"              raw: JSON.stringify({",
+					"    \"username\": \"admin\",",
+					"    \"password\": \"admin\"",
+					"})",
+					"              }",
+					"        ",
+					"    };",
+					"",
+					"    pm.sendRequest(request, function (err, res) {",
+					"            if (res !== null) {",
+					"                ",
+					"                var token = res.json().accessToken;",
+					"                pm.environment.set('token', token)",
+					"                pm.environment.set('baseUrl', 'localhost:9090/api/notifications')",
+					"               ",
+					"            }",
+					"        });"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "baseUrl",
+			"value": "",
+			"type": "string"
 		}
 	]
 }

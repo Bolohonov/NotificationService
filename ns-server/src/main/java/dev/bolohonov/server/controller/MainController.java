@@ -4,6 +4,7 @@ import dev.bolohonov.server.dto.MessageDto;
 import dev.bolohonov.server.service.MainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,17 +19,20 @@ public class MainController {
         this.mainService = mainService;
     }
 
-    @PostMapping("/sms")
+    @PostMapping("sms")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ResponseEntity<MessageDto> postSms(@Validated @RequestBody MessageDto messageDto) {
         return ResponseEntity.ok(mainService.sendSms(messageDto));
     }
 
-    @PostMapping("/push")
+    @PostMapping("push")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ResponseEntity<MessageDto> postPush(@Validated @RequestBody MessageDto messageDto) {
         return ResponseEntity.ok(mainService.sendPush(messageDto));
     }
 
-    @PostMapping("/email")
+    @PostMapping("email")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ResponseEntity<MessageDto> postEmail(@Validated @RequestBody MessageDto messageDto) {
         return ResponseEntity.ok(mainService.sendEmail(messageDto));
     }
