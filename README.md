@@ -12,8 +12,8 @@ docker-compose up
 пароль: admin  
 
 пользователя:  
-логин: admin  
-пароль: admin  
+логин: user  
+пароль: user  
 
 Доступ к сервису: авторизация пользователя localhost:9090/auth/login  
 Основные эндпоинты:  
