@@ -7,37 +7,6 @@
 	},
 	"item": [
 		{
-			"name": "Login",
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"username\" : \"admin\",\r\n    \"password\" : \"admin\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:9090/auth/login",
-					"host": [
-						"localhost"
-					],
-					"port": "9090",
-					"path": [
-						"auth",
-						"login"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "SMS",
 			"event": [
 				{
@@ -96,7 +65,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjoiUk9MRV9BRE1JTixST0xFX1VTRVIiLCJpYXQiOjE3MDQ5MTQ5OTYsImV4cCI6MTcwNDkxODU5Nn0.MLZEqjeJ86udY7Hp1LlxYvwrU55S4zs3Z3bpoP5VeIM",
+							"value": "{{token}}",
 							"type": "string"
 						}
 					]
@@ -113,14 +82,11 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:9090/api/notifications/sms",
+					"raw": "{{baseUrl}}/sms",
 					"host": [
-						"localhost"
+						"{{baseUrl}}"
 					],
-					"port": "9090",
 					"path": [
-						"api",
-						"notifications",
 						"sms"
 					]
 				}
@@ -184,7 +150,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjoiUk9MRV9BRE1JTixST0xFX1VTRVIiLCJpYXQiOjE3MDQ5MTQ5OTYsImV4cCI6MTcwNDkxODU5Nn0.MLZEqjeJ86udY7Hp1LlxYvwrU55S4zs3Z3bpoP5VeIM",
+							"value": "{{token}}",
 							"type": "string"
 						}
 					]
@@ -201,14 +167,11 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:9090/api/notifications/push",
+					"raw": "{{baseUrl}}/push",
 					"host": [
-						"localhost"
+						"{{baseUrl}}"
 					],
-					"port": "9090",
 					"path": [
-						"api",
-						"notifications",
 						"push"
 					]
 				}
@@ -275,7 +238,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjoiUk9MRV9BRE1JTixST0xFX1VTRVIiLCJpYXQiOjE3MDQ5MTQ5OTYsImV4cCI6MTcwNDkxODU5Nn0.MLZEqjeJ86udY7Hp1LlxYvwrU55S4zs3Z3bpoP5VeIM",
+							"value": "{{token}}",
 							"type": "string"
 						}
 					]
@@ -292,19 +255,70 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:9090/api/notifications/email",
+					"raw": "{{baseUrl}}/email",
 					"host": [
-						"localhost"
+						"{{baseUrl}}"
 					],
-					"port": "9090",
 					"path": [
-						"api",
-						"notifications",
 						"email"
 					]
 				}
 			},
 			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"var request = {",
+					"        url: 'localhost:9090/auth/login',",
+					"        method: 'POST',",
+					"        header: 'Content-Type:application/json',",
+					"        body: {",
+					"              mode: 'raw',",
+					"              raw: JSON.stringify({",
+					"    \"username\": \"admin\",",
+					"    \"password\": \"admin\"",
+					"})",
+					"              }",
+					"        ",
+					"    };",
+					"",
+					"    pm.sendRequest(request, function (err, res) {",
+					"            if (res !== null) {",
+					"                ",
+					"                var token = res.json().accessToken;",
+					"                pm.environment.set('token', token)",
+					"                pm.environment.set('baseUrl', 'localhost:9090/api/notifications')",
+					"               ",
+					"            }",
+					"        });"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "baseUrl",
+			"value": "",
+			"type": "string"
 		}
 	]
 }
