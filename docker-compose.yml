@@ -56,7 +56,7 @@ services:
       - eureka-server
 
   redis:
-    image: 'bitnami/redis:latest'
+    image: 'redis:latest'
     hostname: redis
     environment:
       - ALLOW_EMPTY_PASSWORD=yes

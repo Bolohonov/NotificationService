@@ -16,6 +16,11 @@ spring:
             - Path=/api/notifications/**
           filters:
             - StripPrefix=1
+            - name: RequestRateLimiter
+              args:
+                  redis-rate-limiter.replenishRate: 30
+                  redis-rate-limiter.burstCapacity: 10
+                  redis-rate-limiter.requestedTokens: 5
         - id: auth-server
           uri: ${AUTH_SERVER_URI}
           predicates:
