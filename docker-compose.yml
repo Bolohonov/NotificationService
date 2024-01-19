@@ -15,6 +15,8 @@ services:
       - "9090:9090"
     environment:
         - eureka.client.serviceUrl.defaultZone=http://eureka-server:8761/eureka/
+        - REDIS_HOST=redis
+        - REDIS_PORT=6379
         - JWT_SECRET=ecf1222c-88fd-47f3-988f-bdd78bade1ad
         - NS_SERVER_URI=http://ns-server:8085
         - AUTH_SERVER_URI=http://auth-server:8090
