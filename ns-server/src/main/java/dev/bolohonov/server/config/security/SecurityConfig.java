@@ -1,12 +1,14 @@
-package dev.bolohonov.server.config;
+package dev.bolohonov.server.config.security;
 
 import dev.bolohonov.server.jwt.JwtTokenAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -14,27 +16,23 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 
+@Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled = true, jsr250Enabled = true, prePostEnabled = true)
+@EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true, prePostEnabled = true)
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private JwtTokenAuthenticationFilter jwtTokenAuthenticationFilter;
-
-    @Autowired
-    public SecurityConfig(JwtTokenAuthenticationFilter jwtTokenAuthenticationFilter) {
-        this.jwtTokenAuthenticationFilter = jwtTokenAuthenticationFilter;
-    }
+    private final JwtTokenAuthenticationFilter jwtTokenAuthenticationFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        // Enable CORS and disable CSRF
-        http.cors().and().csrf().disable();
+        // Disable CSRF
+        http.csrf(AbstractHttpConfigurer::disable);
 
         // Set session management to stateless
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         // Set unauthorized requests exception handler
         http.exceptionHandling(
@@ -46,14 +44,12 @@ public class SecurityConfig {
                                         rsp.sendError(HttpServletResponse.SC_FORBIDDEN)));
 
         // Set permissions on endpoints
-        http.authorizeRequests()
+        http.authorizeHttpRequests(auth -> auth
+                        .anyRequest()
+                        .authenticated()
+        );
 
-                .antMatchers("/notifications/test" )
-                .permitAll()
-                .anyRequest()
-                .authenticated();
         // Set up oauth2 resource server
-
         http.addFilterBefore(jwtTokenAuthenticationFilter,
                 UsernamePasswordAuthenticationFilter.class);
 

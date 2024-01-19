@@ -8,6 +8,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
+
 @RestController
 @RequestMapping("/notifications")
 public class MainController {
@@ -35,5 +37,17 @@ public class MainController {
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ResponseEntity<MessageDto> postEmail(@Validated @RequestBody MessageDto messageDto) {
         return ResponseEntity.ok(mainService.sendEmail(messageDto));
+    }
+
+    @GetMapping("all")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    public ResponseEntity<Collection<MessageDto>> test() {
+        return ResponseEntity.ok(mainService.getAllMessages());
+    }
+
+    @GetMapping("byMsg")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    public ResponseEntity<MessageDto> test(@RequestParam String msg) {
+        return ResponseEntity.ok(mainService.getByMsg(msg));
     }
 }

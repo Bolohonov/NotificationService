@@ -1,14 +1,16 @@
 package dev.bolohonov.server.dto;
 
 import dev.bolohonov.server.model.MessageType;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class MessageDto {
 
     @NotNull(message = "Необходимо указать текст сообщения")

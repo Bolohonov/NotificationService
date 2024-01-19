@@ -1,4 +1,4 @@
-package dev.bolohonov.server.config;
+package dev.bolohonov.server.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
