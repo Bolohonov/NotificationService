@@ -17,6 +17,6 @@ public class AppConfig {
 
     @Bean
     KeyResolver userKeyResolver() {
-        return exchange -> Mono.just("1");
+        return exchange -> Mono.just("30");
     }
 }
